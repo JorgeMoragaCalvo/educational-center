@@ -8,10 +8,7 @@ import com.globant.educationalcenter.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/students")
@@ -33,6 +30,7 @@ public class StudentController {
         user.setRut(studentDTO.getRut());
         user.setEmail(studentDTO.getEmail());
         user.setPassword(studentDTO.getPassword());
+        user.setActive(true);
         user.setAccountLocked(false);
         user.setEnabled(true);
         user.setRoles(studentDTO.getRoles());
@@ -47,5 +45,11 @@ public class StudentController {
         StudentEntity savedStudent = studentService.createStudents(student);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedStudent);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentEntity> deactivateStudents(@PathVariable("id") Long id){
+        StudentEntity savedStudent = studentService.deactivateStudent(id);
+        return ResponseEntity.status(HttpStatus.OK).body(savedStudent);
     }
 }

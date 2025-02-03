@@ -16,6 +16,7 @@ public class StudentDTO {
     private String rut;
     private String email;
     private String password;
+    private boolean active;
     private LocalDate createdAt;
     private LocalDate modifiedAt;
     private Set<Role> roles;

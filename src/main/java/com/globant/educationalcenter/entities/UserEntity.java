@@ -34,6 +34,7 @@ public class UserEntity extends Audit implements Principal {
     private String rut;
     private String email;
     private String password;
+    private boolean active = true;
     private boolean accountLocked;
     private boolean enabled = true;
 
