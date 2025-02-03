@@ -1,6 +1,7 @@
 package com.globant.educationalcenter.entities;
 
-import jakarta.persistence.Entity;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,15 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentEntity extends UserEntity{
+public class StudentEntity {
 
-    private String rut;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private LocalDate dateOfBirth;
     private String program;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private UserEntity user;
 }

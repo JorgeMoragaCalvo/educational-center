@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -21,7 +21,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserEntity> createClients(@Valid @RequestBody UserEntity user){
-        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+    public ResponseEntity<UserEntity> createUsers(@Valid @RequestBody UserEntity user){
+        UserEntity userSaved = userService.createUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userSaved);
     }
 }
