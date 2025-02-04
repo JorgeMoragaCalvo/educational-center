@@ -1,6 +1,7 @@
 package com.globant.educationalcenter.controllers;
 
 import com.globant.educationalcenter.dtos.StudentDTO;
+import com.globant.educationalcenter.dtos.StudentsActiveDTO;
 import com.globant.educationalcenter.entities.StudentEntity;
 import com.globant.educationalcenter.entities.UserEntity;
 import com.globant.educationalcenter.services.StudentService;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/students")
@@ -51,5 +54,10 @@ public class StudentController {
     public ResponseEntity<StudentEntity> deactivateStudents(@PathVariable("id") Long id){
         StudentEntity savedStudent = studentService.deactivateStudent(id);
         return ResponseEntity.status(HttpStatus.OK).body(savedStudent);
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<StudentsActiveDTO>> getActiveStudents(){
+        return ResponseEntity.ok(studentService.allStudentsActive());
     }
 }

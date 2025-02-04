@@ -1,6 +1,7 @@
 package com.globant.educationalcenter.repositories;
 
 import com.globant.educationalcenter.entities.StudentEntity;
+import com.globant.educationalcenter.entities.UserEntity;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,6 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
     @Query("select s from StudentEntity s join fetch s.user where s.id = :id")
     Optional<StudentEntity> findById(@NonNull Long id);
 
-    List<StudentEntity> findAllByUserActive(boolean active);
+    @Query("select u, s.program from StudentEntity s join s.user u where u.active = true")
+    List<Object[]> findAllByUserActive();
 }

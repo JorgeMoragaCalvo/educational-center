@@ -25,6 +25,6 @@ public abstract class Audit {
     @Column(insertable = false)
     private LocalDateTime modifiedAt;
 
-    @Column(insertable = false)
+    @Column
     private LocalDateTime deletedAt;
 }
