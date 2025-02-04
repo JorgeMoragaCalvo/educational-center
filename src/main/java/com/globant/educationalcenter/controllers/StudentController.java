@@ -1,5 +1,6 @@
 package com.globant.educationalcenter.controllers;
 
+import com.globant.educationalcenter.converters.StudentConverter;
 import com.globant.educationalcenter.dtos.StudentDTO;
 import com.globant.educationalcenter.dtos.StudentsActiveDTO;
 import com.globant.educationalcenter.entities.StudentEntity;
@@ -19,35 +20,22 @@ public class StudentController {
 
     private final StudentService studentService;
     private final UserService userService;
+    private final StudentConverter studentConverter;
 
-    public StudentController(StudentService studentService, UserService userService) {
+    public StudentController(StudentService studentService, UserService userService,
+                             StudentConverter studentConverter) {
         this.studentService = studentService;
         this.userService = userService;
+        this.studentConverter = studentConverter;
     }
 
     @PostMapping
-    public ResponseEntity<StudentEntity> newStudent(@RequestBody StudentDTO studentDTO){
-        UserEntity user = new UserEntity();
-        user.setFirstname(studentDTO.getFirstname());
-        user.setLastname(studentDTO.getLastname());
-        user.setRut(studentDTO.getRut());
-        user.setEmail(studentDTO.getEmail());
-        user.setPassword(studentDTO.getPassword());
-        user.setActive(true);
-        user.setAccountLocked(false);
-        user.setEnabled(true);
-        user.setRoles(studentDTO.getRoles());
-
-        UserEntity savedUser = userService.createUser(user);
-
-        StudentEntity student = new StudentEntity();
-        student.setUser(savedUser);
-        student.setDateOfBirth(studentDTO.getDateOfBirth());
-        student.setProgram(studentDTO.getProgram());
-
+    public ResponseEntity<StudentDTO> newStudent(@RequestBody StudentDTO studentDTO){
+        StudentEntity student = studentConverter.fromDTO(studentDTO);
         StudentEntity savedStudent = studentService.createStudents(student);
+        StudentDTO responseDTO = studentConverter.fromEntity(savedStudent);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedStudent);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @GetMapping("/{id}")
