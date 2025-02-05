@@ -4,9 +4,7 @@ import com.globant.educationalcenter.converters.StudentConverter;
 import com.globant.educationalcenter.dtos.StudentDTO;
 import com.globant.educationalcenter.dtos.StudentsActiveDTO;
 import com.globant.educationalcenter.entities.StudentEntity;
-import com.globant.educationalcenter.entities.UserEntity;
 import com.globant.educationalcenter.services.StudentService;
-import com.globant.educationalcenter.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.annotation.Secured;
@@ -19,13 +17,11 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
-    private final UserService userService;
     private final StudentConverter studentConverter;
 
-    public StudentController(StudentService studentService, UserService userService,
+    public StudentController(StudentService studentService,
                              StudentConverter studentConverter) {
         this.studentService = studentService;
-        this.userService = userService;
         this.studentConverter = studentConverter;
     }
 
